@@ -1,0 +1,24 @@
+workflows:
+  flutter-ios:
+    name: Flutter iOS Build & Deploy
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - firebase_credentials
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+          cd ios && pod install && cd ..
+      - name: Build IPA
+        script: |
+          flutter build ipa --release
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      firebase:
+        credentials: $FIREBASE_CREDENTIALS
+        app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
+        groups: testers

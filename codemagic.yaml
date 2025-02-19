@@ -19,6 +19,6 @@ workflows:
       - build/ios/ipa/*.ipa
     publishing:
       firebase:
-        credentials: $FIREBASE_CREDENTIALS
+        firebase_service_account: $FIREBASE_CREDENTIALS
         app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
         groups: testers

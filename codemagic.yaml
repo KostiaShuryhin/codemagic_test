@@ -1,12 +1,14 @@
 workflows:
-  flutter-ios:
-    name: Flutter iOS Build & Deploy
+  ios-build-and-distribute:
+    name: Flutter iOS Build & Distribute
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
-      groups:
-        - firebase_credentials
+      firebase_app_distribution:
+        credentials: $FIREBASE_CREDENTIALS
+        app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
+        groups: testers
     scripts:
       - name: Install dependencies
         script: |
@@ -14,12 +16,15 @@ workflows:
           cd ios && pod install && cd ..
       - name: Build IPA
         script: |
-          flutter build ipa --release
+          flutter build ios --release --no-codesign
+          xcodebuild archive -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/Runner.xcarchive CODE_SIGNING_ALLOWED=NO
+          xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportPath build/Runner -exportOptionsPlist ios/Runner/ExportOptions.plist
+      - name: Publish to Firebase App Distribution
+        script: |
+          firebase appdistribution:distribute build/Runner/Runner.ipa --app "1:824590711365:ios:e982aecf238ef3d1bb012c" --token $FIREBASE_CREDENTIALS --groups "testers" --release-notes "Test build"
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/Runner/Runner.ipa
     publishing:
-      firebase:
-        firebase_service_account: $FIREBASE_CREDENTIALS
-        app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
-        groups:
-          - testers
+      email:
+        recipients:
+          - kostiashuryhin@gmail.com

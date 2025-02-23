@@ -21,10 +21,9 @@ workflows:
     artifacts:
       - build/Runner/Runner.ipa
     publishing:
-      firebase_app_distribution:
-        credentials: $FIREBASE_CREDENTIALS
-        app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
-        groups: testers
+      credentials: $FIREBASE_CREDENTIALS
+      app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
+      groups: testers
       email:
         recipients:
           - kostiashuryhin@gmail.com

@@ -5,7 +5,14 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      groups:
+        - firebase_credentials
     scripts:
+      - name: Load Firebase configuration
+        script: |
+          #!/usr/bin/env sh
+          set -e # exit on first failed command
+          echo "$IOS_FIREBASE_SECRET" > "$CM_BUILD_DIR/ios/Runner/GoogleService-Info.plist"
       - name: Install dependencies
         script: |
           flutter pub get
@@ -21,9 +28,10 @@ workflows:
     artifacts:
       - build/Runner/Runner.ipa
     publishing:
-      credentials: $FIREBASE_CREDENTIALS
-      app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
-      groups: testers
+      firebase:
+        service_credentials: $FIREBASE_CREDENTIALS
+        app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
+        groups: testers
       email:
         recipients:
           - kostiashuryhin@gmail.com

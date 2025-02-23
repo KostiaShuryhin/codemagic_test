@@ -34,3 +34,4 @@ workflows:
         groups: testers
       email:
         recipients:
+          - kostiashuryhin@gmail.com

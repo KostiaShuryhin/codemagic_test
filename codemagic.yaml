@@ -29,7 +29,7 @@ workflows:
       - build/Runner/Runner.ipa
     publishing:
       firebase:
-        service_credentials: $FIREBASE_CREDENTIALS
+        service_credentials: $FIREBASE_SERVICE_ACCOUNT
         app_id: "1:824590711365:ios:e982aecf238ef3d1bb012c"
         groups: testers
       email:

@@ -4,7 +4,6 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
-      cocoapods: default
       groups:
         - firebase_credentials
     scripts:
@@ -16,7 +15,6 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
-          cd ios && pod install && cd ..
       - name: Build IPA
         script: |
           flutter build ios --release --no-codesign

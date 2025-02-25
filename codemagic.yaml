@@ -4,7 +4,6 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
-      cocoapods: default
       ios_signing:
         provisioning_profiles:
           - Trial_Profile
@@ -21,14 +20,11 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
-          cd ios && pod install && cd .. # Добавил pod install, так как вы используете xcodebuild archive
       - name: Set up code signing settings on Xcode project
         script: xcode-project use-profiles
       - name: Build IPA
         script: |
           flutter build ios --release
-          xcodebuild archive -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/Runner.xcarchive
-          xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportPath build/Runner -exportOptionsPlist ios/Runner/ExportOptions.plist
       - name: Publish to Firebase App Distribution
         script: |
           firebase appdistribution:distribute build/Runner/Runner.ipa --app "1:824590711365:ios:e982aecf238ef3d1bb012c" --token $FIREBASE_CREDENTIALS --groups "testers" --release-notes "Test build"

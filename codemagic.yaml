@@ -27,15 +27,11 @@ workflows:
         script: |
           flutter build ios --release
     publishing:
-  firebase:
-    firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-    ios:
-      app_id: "1:824590711365:ios:4312465d8be8e126bb012c"
-      groups:
-        - testers      
+      firebase:
+        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+      ios:
+        app_id: "1:824590711365:ios:4312465d8be8e126bb012c"
+        groups:
+         - testers      
     artifacts:
       - build/Runner/Runner.ipa  
-    publishing:
-      email:
-        recipients:
-          - kostiashuryhin@gmail.com

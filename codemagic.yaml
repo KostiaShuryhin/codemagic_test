@@ -27,7 +27,7 @@ workflows:
           flutter build ios --release
       - name: Publish to Firebase App Distribution
         script: |
-          firebase appdistribution:distribute build/Runner/Runner.ipa --app "1:824590711365:ios:e982aecf238ef3d1bb012c" --token $FIREBASE_CREDENTIALS --groups "testers" --release-notes "Test build"
+          firebase appdistribution:distribute build/Runner/Runner.ipa --app "1:824590711365:ios:4312465d8be8e126bb012c" --token $FIREBASE_CREDENTIALS --groups "testers" --release-notes "Test build"
     artifacts:
       - build/Runner/Runner.ipa
     publishing:
